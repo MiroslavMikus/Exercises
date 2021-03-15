@@ -1,0 +1,150 @@
+﻿<Controls:MetroWindow x:Class="Exercise.SignalR.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise.SignalR.Client"
+        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="{Binding Title}" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel, IsDesignTimeCreatable=False}">
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="VisConverter"/>
+        <local:InvertConverter x:Key="Invert"/>
+        <local:NotEmptyString x:Key="NotEmpty"/>
+        <local:NotNull x:Key="NotNull"/>
+        <local:MultiBoolConverter x:Key="MultiAnd"/>
+    </Window.Resources>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Settings" Click="Settings_Click"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl >
+            <Controls:Flyout x:Name="Settings"
+                             AnimateOpacity="True"
+                             CloseButtonIsCancel="True"
+                             Header="Settings"
+                             HorizontalContentAlignment="Stretch"
+                             Position="Right"
+                             >
+                <DockPanel>
+                    <Label Content="Enter server address:" Margin="5" FontSize="15" DockPanel.Dock="Top"/>
+                    <TextBox Margin="10" DockPanel.Dock="Top" Text="{Binding ServerUrl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock  Margin="6" Background="LightGray" Padding="10" Text="{Binding LogWindow}" Foreground="Black"/>
+                    </ScrollViewer>
+                </DockPanel>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="InputField" Margin="6" Text="{Binding Input}"/>
+
+        <Button Width="100" Content="Sign out" Grid.Column="3" Margin="6" 
+                Command="{Binding SignOutCommand}"
+                IsEnabled="{Binding IsConnected}" />
+        <Button Width="100" Content="SignIn" Grid.Column="2" Margin="6" 
+                Command="{Binding SignInCommand}">
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource MultiAnd}">
+                    <Binding ElementName="InputField" Path="Text" Converter="{StaticResource NotEmpty}"/>
+                    <Binding Path="DataContext.IsConnected" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Converter="{StaticResource Invert}"/>
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+        <Button Width="100" Content="Send" Grid.Column="1" Margin="6" 
+                Command="{Binding SendCommand}"
+                CommandParameter="{Binding ElementName=RoomsList, Path=SelectedItem.Name}"
+               >
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource MultiAnd}">
+                    <Binding ElementName="InputField" Path="Text" Converter="{StaticResource NotEmpty}"/>
+                    <Binding ElementName="RoomsList" Path="SelectedItem" Converter="{StaticResource NotNull}"/>
+                    <Binding Path="DataContext.IsConnected" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}"/>
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4">
+            <Grid DockPanel.Dock="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Rooms:" />
+                <ListBox Margin="6" ItemsSource="{Binding Rooms}" x:Name="RoomsList" Grid.Row="1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}">
+                                <Label.Style>
+                                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button Content="Add" Margin="3" Command="{Binding AddCommand}" ToolTip="Create a new chat room" IsEnabled="{Binding IsConnected}"/>
+                    <Button Content="Join" Margin="3" 
+                            ToolTip="Join selected char room"
+                            Command="{Binding JoinCommand}" 
+                            CommandParameter="{Binding ElementName=RoomsList, Path=SelectedItem.Name}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource MultiAnd}">
+                                <Binding ElementName="RoomsList" Path="SelectedItem.IsActive" Converter="{StaticResource Invert}"/>
+                                <Binding ElementName="RoomsList" Path="SelectedItem" Converter="{StaticResource NotNull}"/>
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                    <Button Content="Leave" Margin="3" 
+                            ToolTip="Leave selected chat room"
+                            Command="{Binding LeaveCommand}"
+                            CommandParameter="{Binding ElementName=RoomsList, Path=SelectedItem}"
+                            >
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource MultiAnd}">
+                                <Binding ElementName="RoomsList" Path="SelectedItem.IsActive"/>
+                                <Binding ElementName="RoomsList" Path="SelectedItem" Converter="{StaticResource NotNull}"/>
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <StackPanel DockPanel.Dock="Left">
+                <Label Content="Users:" Grid.Column="2" Grid.Row="1"/>
+                <ListBox Margin="6" ItemsSource="{Binding ElementName=RoomsList, Path=SelectedItem.Users}" Width="100">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBlock  Margin="6" Background="LightGray" Padding="10" Text="{Binding ElementName=RoomsList, Path=SelectedItem.Chat}" />
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Controls:MetroWindow>
