@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise.Stateless.Car", "Exercise.Stateless.Car\Exercise.Stateless.Car.csproj", "{ABC5319C-8C0C-4279-96B6-D3F28EC6560B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercies.Stateless.Connection", "Exercies.Stateless.Connection\Exercies.Stateless.Connection.csproj", "{7699D3F3-24DB-4F26-878C-A6FC702A05D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABC5319C-8C0C-4279-96B6-D3F28EC6560B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC5319C-8C0C-4279-96B6-D3F28EC6560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC5319C-8C0C-4279-96B6-D3F28EC6560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC5319C-8C0C-4279-96B6-D3F28EC6560B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7699D3F3-24DB-4F26-878C-A6FC702A05D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7699D3F3-24DB-4F26-878C-A6FC702A05D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7699D3F3-24DB-4F26-878C-A6FC702A05D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7699D3F3-24DB-4F26-878C-A6FC702A05D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3082AF98-FDE9-4C7E-9BA7-80800A765AA3}
+	EndGlobalSection
+EndGlobal
