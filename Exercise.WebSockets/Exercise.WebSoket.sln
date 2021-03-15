@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TcpCommunication", "TcpCommunication", "{0DB0DA90-C335-4C32-A763-05F463E3B898}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpServer", "TcpCommunication\Server\TcpServer.csproj", "{77689B04-C5B0-4CD5-B797-E5CD2A062F98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpClient", "TcpCommunication\Client\TcpClient.csproj", "{F7F521E3-A179-44C5-9E77-6E227CEF4CD8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebSockets", "WebSockets", "{97F2BB3A-0014-4E8B-B321-8561632C6763}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketsServer", "WebSocket\Server\WebSocketsServer.csproj", "{BD8B6C80-9A25-44EA-A46C-C345FB22E956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketsClient", "WebSocket\Client\WebSocketsClient.csproj", "{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77689B04-C5B0-4CD5-B797-E5CD2A062F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77689B04-C5B0-4CD5-B797-E5CD2A062F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77689B04-C5B0-4CD5-B797-E5CD2A062F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77689B04-C5B0-4CD5-B797-E5CD2A062F98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F521E3-A179-44C5-9E77-6E227CEF4CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F521E3-A179-44C5-9E77-6E227CEF4CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F521E3-A179-44C5-9E77-6E227CEF4CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F521E3-A179-44C5-9E77-6E227CEF4CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8B6C80-9A25-44EA-A46C-C345FB22E956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8B6C80-9A25-44EA-A46C-C345FB22E956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8B6C80-9A25-44EA-A46C-C345FB22E956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8B6C80-9A25-44EA-A46C-C345FB22E956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77689B04-C5B0-4CD5-B797-E5CD2A062F98} = {0DB0DA90-C335-4C32-A763-05F463E3B898}
+		{F7F521E3-A179-44C5-9E77-6E227CEF4CD8} = {0DB0DA90-C335-4C32-A763-05F463E3B898}
+		{BD8B6C80-9A25-44EA-A46C-C345FB22E956} = {97F2BB3A-0014-4E8B-B321-8561632C6763}
+		{DCA6943D-7B95-4B45-BC51-8C3E10AE73E7} = {97F2BB3A-0014-4E8B-B321-8561632C6763}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56DFB5CA-E3AD-4ABB-9196-F84246D39F1F}
+	EndGlobalSection
+EndGlobal
