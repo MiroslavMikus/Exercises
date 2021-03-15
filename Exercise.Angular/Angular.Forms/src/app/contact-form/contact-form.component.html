@@ -1,0 +1,32 @@
+
+<form class="input-form">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input 
+    required 
+    minlength="4"
+    pattern="apple" 
+    ngModel #firstName="ngModel" 
+    (change)="log(firstName)" 
+    name="firstName" 
+    id="firstName" 
+    type="text" 
+    class="form-control">
+    <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
+      <div *ngIf="firstName.errors.required">
+        First name is required.
+      </div>
+      <div *ngIf="firstName.errors.minlength">
+        First name should be minumum {{firstName.errors.minlength.requiredLength}} characters. Current length is {{firstName.errors.minlength.actualLength}}.
+      </div>
+      <div *ngIf="firstName.errors.pattern">
+        First name doesn't match the pattern (apple).
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="comment" >Comment</label>
+    <textarea ngModel name="comment" class="form-control" id="comment" cols="30" rows="10"></textarea>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+</form>

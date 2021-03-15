@@ -1,0 +1,64 @@
+<md-card class="material-card">
+    <md-card-title>
+        Checkbox
+    </md-card-title>
+    <md-card-subtitle>
+        <md-checkbox
+        #showDetails
+        [value]=""
+        [checked]="isChecked"
+        (change)="onChange($event)"
+        >Show details
+        </md-checkbox>
+    </md-card-subtitle>
+
+    <md-card-content *ngIf="showDetails.checked" >
+        Expandable content area.
+    </md-card-content>
+</md-card>
+
+<md-card class="material-card" value="0">
+    <md-card-title>
+        Radio buttons
+    </md-card-title>
+    <md-card-content>
+        <md-radio-group>
+            <md-radio-button value="1">Male</md-radio-button>
+            <md-radio-button value="0">Female</md-radio-button>
+        </md-radio-group>
+    </md-card-content>
+</md-card>
+
+<md-card class="material-card">
+    <md-card-title>
+        Drop Down
+    </md-card-title>
+    <md-card-content>
+        <md-select placeholder="Favorite color" [(ngModel)]="color">
+            <md-option 
+            *ngFor="let color of colors"
+            [value]="color.id">{{color.name}}</md-option>
+        </md-select>
+        <p>Color with id {{color}} is selected</p>
+    </md-card-content>
+</md-card>
+
+<md-card class="material-card">
+    <md-card-title>
+        Input
+    </md-card-title>
+    <md-card-content>
+      <md-input-container>
+          <input 
+          ngModel
+          #username="ngModel" 
+          name="username" 
+          type="text" mdInput placeholder="Username" required>
+          <md-hint>Type a uniq username.</md-hint>
+          <span mdSuffix >@domail.com</span>
+          <md-error *ngIf="username.invalid && username.errors.required">
+              The username field is required.
+          </md-error>
+      </md-input-container>
+    </md-card-content>
+</md-card>
