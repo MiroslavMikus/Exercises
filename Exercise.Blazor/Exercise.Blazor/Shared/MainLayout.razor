@@ -1,0 +1,52 @@
+﻿@inherits LayoutComponentBase
+
+@using MatBlazor
+
+<MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                <MatIconButton Icon="menu" OnClick="((a) => MenuClick())"></MatIconButton>
+                <MatAppBarTitle>. M I R O</MatAppBarTitle>
+            </MatAppBarSection>
+
+            <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                <NavLink class="text-white nav-link" href="counter">
+                    Counter
+                </NavLink>
+                <NavLink class="text-white nav-link" href="fetchdata">
+                    Fetch data
+                </NavLink>
+                <NavLink class="text-white nav-link" href="table">
+                    Table
+                </NavLink>
+                <NavLink class="text-white nav-link" href="todo">
+                    To-Do
+                </NavLink>
+            </MatAppBarSection>
+        </MatAppBarRow>
+    </MatAppBar>
+    <MatAppBarContent>
+        <MatDrawerContainer Style="width: 100vw; height: 90vh;">
+            <MatDrawer @bind-Opened="@Opened" Mode="@MatDrawerMode.Modal">
+                <div class="container" style="padding: 1em;margin:1em">
+                    Here is your example drawer :)
+                </div>
+            </MatDrawer>
+            <MatDrawerContent>
+                <div class="container" style="padding: 1em;margin:1em">
+                    @Body
+                </div>
+            </MatDrawerContent>
+        </MatDrawerContainer>
+    </MatAppBarContent>
+</MatAppBarContainer>
+
+@code{
+    bool Opened = false;
+
+    void MenuClick()
+    {
+        Opened = !Opened;
+    }
+}

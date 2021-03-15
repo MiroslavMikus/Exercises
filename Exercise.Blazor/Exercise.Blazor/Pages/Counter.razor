@@ -1,0 +1,17 @@
+﻿@page "/counter"
+@using MatBlazor
+@using Microsoft.AspNetCore.Components
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<MatButton Icon="favorite" OnClick="@RunOnClick" Label="Simple Button"></MatButton>
+
+@code {
+    int currentCount = 0;
+    public void RunOnClick(MouseEventArgs e)
+    {
+        currentCount++;
+    }
+}

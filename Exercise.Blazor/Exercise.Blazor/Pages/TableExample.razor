@@ -1,0 +1,43 @@
+﻿@page "/table"
+@using MatBlazor
+
+
+<MatTable Items="@Posts"  class="mat-elevation-z5"
+          LoadInitialData="true"
+          Striped="true"
+          RequestApiOnlyOnce="true"
+          ApiUrl="http://jsonplaceholder.typicode.com/posts"
+          FilterByColumnName="title"
+          DebounceMilliseconds="150">
+    <MatTableHeader>
+        <th style="white-space:nowrap;">User ID</th>
+        <th>Title</th>
+        <th>Body</th>
+    </MatTableHeader>
+
+    <MatTableRow>
+        <td>@context.userId</td>
+        <td>@context.title</td>
+        <td>@context.body</td>
+    </MatTableRow>
+</MatTable>
+
+<br />
+
+<MatTextField Label="Post title" FullWidth="true" />
+<MatTextField Label="Body" FullWidth="true" />
+<div style="margin:10px">
+    <MatButton Raised="true" Outlined="true">Send post</MatButton>
+</div>
+
+@code {
+    public class Post
+    {
+        public int userId { get; set; }
+        public int id { get; set; }
+        public string title { get; set; }
+        public string body { get; set; }
+    }
+
+    Post[] Posts;
+}

@@ -1,0 +1,38 @@
+﻿@page "/todo"
+@using MatBlazor
+
+<h1>To-Do's</h1>
+<MatTextField @bind-Value="@CurrentToDo" Label="Add To-Do" OnInput="((a) => OnImput())" />
+
+<div style="margin:10px">
+    <MatButton Disabled="@Disabled" Raised="true" Outlined="true" OnClick="@AddToDo">Send post</MatButton>
+</div>
+
+<MatList SingleSelection="true">
+    @foreach (var todo in @ToDos)
+    {
+        <MatListItem>
+            <MatCheckbox>@todo</MatCheckbox>
+        </MatListItem>
+    }
+</MatList>
+
+@code {
+    string CurrentToDo;
+
+    void OnImput()
+    {
+        Disabled = !string.IsNullOrEmpty(CurrentToDo);
+    }
+
+    bool Disabled = true;
+
+    List<string> ToDos = new List<string>();
+
+    void AddToDo()
+    {
+        ToDos.Add(CurrentToDo);
+        CurrentToDo = string.Empty;
+        Disabled = true;
+    }
+}
