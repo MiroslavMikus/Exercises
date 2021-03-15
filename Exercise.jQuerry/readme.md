@@ -1,0 +1,1 @@
+This is the exercise code from [jQuerry tutorial](https://www.youtube.com/watch?v=G-POtu9J-m4&index=1&list=PLoYCgNOIyGABdI2V8I_SWo22tFpgh2s6_)

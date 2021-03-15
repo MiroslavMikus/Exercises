@@ -1,0 +1,137 @@
+<!-- https://www.youtube.com/watch?v=KkzVFB3Ba_o&index=6&list=PLoYCgNOIyGABdI2V8I_SWo22tFpgh2s6_ -->
+
+<!doctype html>
+<html>
+
+<head>
+    <title>jQuery Tutorial</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+        crossorigin="anonymous">
+
+    <style type="text/css">
+        #slider {
+            width: 720px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        #slider .slides {
+            display: block;
+            width: 6000px;
+            height: 400px;
+            margin: 0;
+            padding: 0;
+        }
+
+        #slider .slide {
+            float: left;
+            list-style-type: none;
+            width: 720px;
+            height: 400px;
+        }
+
+        /* helper css, since we don't have images */
+
+        .slide1 {
+            background: red;
+        }
+
+        .slide2 {
+            background: blue;
+        }
+
+        .slide3 {
+            background: green;
+        }
+
+        .slide4 {
+            background: purple;
+        }
+
+        .slide5 {
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <script>
+
+    </script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="text-muted">jQuery Basic Slider</h1>
+        </div>
+
+        <div id="slider">
+            <ul class="slides">
+                <li class="slide slide1">slide1</li>
+                <li class="slide slide2">slide2</li>
+                <li class="slide slide3">slide3</li>
+                <li class="slide slide4">slide4</li>
+                <li class="slide slide5">slide5</li>
+                <li class="slide slide1">slide1</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+
+        $(function () {
+
+            //configuration
+            var width = 720;
+            var amimationSpeed = 1000;
+            var speed = 3000;
+            var currentSlide = 1;
+
+            var $slider = $('#slider');
+            var $sliderContainer = $slider.find('.slides');
+            var $slides = $sliderContainer.find('.slide');
+
+            var interval;
+
+            function startSlider() {
+                interval = setInterval(function () {
+                    $sliderContainer.animate({ 'margin-left': '-=' + width }, amimationSpeed, function () {
+                        currentSlide++;
+                        if (currentSlide === $slides.length) {
+                            currentSlide = 1;
+                            $sliderContainer.css('margin-left', 0)
+                        }
+                    });
+                }, speed)
+            }
+
+            function pauseSlider(){
+                clearInterval(interval);
+            }
+
+            $slider.on('mouseenter', pauseSlider).on('mouseleave', startSlider);
+
+            startSlider();
+        })
+
+    </script>
+
+</body>
+
+</html>
