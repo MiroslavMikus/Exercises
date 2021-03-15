@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Scripts\TimedOperation.fs" />
+    <Compile Include="Scripts\StateMachine.fs" />
+    <Compile Include="Scripts\Reflection.fs" />
+    <Compile Include="Scripts\Actors.fs" />
+    <Compile Include="Scripts\TypeProviders.fs" />
+    <Compile Include="Scripts\Options.fs" />
+    <Compile Include="Scripts\Types.fs" />
+    <Compile Include="Scripts\Sequences.fs" />
+    <Compile Include="Scripts\Arrays.fs" />
+    <Compile Include="Scripts\AsyncWorkflow.fs" />
+    <Compile Include="Scripts\Measurements.fs" />
+    <Compile Include="Scripts\ActivePattern.fs" />
+    <Compile Include="Scripts\StrategyPattern.fs" />
+    <Compile Include="Scripts\Generic.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="3.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>
