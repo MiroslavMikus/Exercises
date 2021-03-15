@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+    RabbitMq:
+        image: masstransit/rabbitmq
+        container_name: rabbitmq
+        ports:
+            - "15672:15672"
+            - "5672:5672"
+            - "1883:1883"
+            - "8883:8883"
+        volumes:
+            - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
