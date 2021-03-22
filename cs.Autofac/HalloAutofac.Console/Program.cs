@@ -1,12 +1,13 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using HalloAutofac.Console.DisposeExample;
 
 namespace HalloAutofac.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            await Dispose_Example.Test();
         }
     }
 }
