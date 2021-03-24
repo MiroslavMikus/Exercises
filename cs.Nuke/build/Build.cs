@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Tasks;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
@@ -44,6 +46,15 @@ class Build : NukeBuild
     Target Test => _ => _
         .Executes(() =>
         {
+            // var testProjects = GlobFiles(RootDirectory / "ConsoleApp1", "*Test.csproj");
+            //
+            // foreach (var project in testProjects)
+            // {
+            //     var settings = new DotNetTestSettings();
+            //     settings = settings.SetProperty("Project", "");
+            //     DotNetTest(settings);
+            // }
+            //
             DotNetTest();
         });
 
