@@ -23,3 +23,5 @@ COPY --from=node /app/dist/angular-app /usr/share/nginx/html
 ```
 
 > docker build --pull --rm -f "Dockerfile2" -t angulartest:v3 "."
+
+> docker run --rm -d -p 80:80 angulartest:v3

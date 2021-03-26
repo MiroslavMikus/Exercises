@@ -1,5 +1,11 @@
-FROM nginx:alpine
-
+# stage 1
+FROM node:latest as node
 WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build --prod
 
-COPY /dist/angular-test /usr/share/nginx/html
+# stage 2
+# Runner container
+FROM nginx:alpine
+COPY --from=node /app/dist/angular-app /usr/share/nginx/html
