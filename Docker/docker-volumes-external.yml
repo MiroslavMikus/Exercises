@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  frontend:
+    image: node:lts
+    volumes:
+      - myapp:/home/node/app
+volumes:
+  myapp:git 
+    external: true
