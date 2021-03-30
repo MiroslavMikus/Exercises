@@ -6,11 +6,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="ConsoleTools" Version="0.5.4" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
