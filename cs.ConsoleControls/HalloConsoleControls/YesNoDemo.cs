@@ -1,5 +1,5 @@
-﻿using DustInTheWind.ConsoleTools.InputControls;
-using System;
+﻿using System;
+using DustInTheWind.ConsoleTools.InputControls;
 
 namespace Exercise.ConsoleControls
 {
@@ -7,10 +7,10 @@ namespace Exercise.ConsoleControls
     {
         public void Print()
         {
-            YesNoQuestion yesNoQuestion = new YesNoQuestion("Do you want to continue?");
+            var yesNoQuestion = new YesNoQuestion("Do you want to continue?");
             yesNoQuestion.AcceptCancel = false;
 
-            YesNoAnswer answer = yesNoQuestion.ReadAnswer();
+            var answer = yesNoQuestion.ReadAnswer();
 
             Console.WriteLine("Your answer is " + answer);
         }

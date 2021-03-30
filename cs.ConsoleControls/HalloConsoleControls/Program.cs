@@ -1,15 +1,12 @@
-﻿using DustInTheWind.ConsoleTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System;
+using DustInTheWind.ConsoleTools;
+using Exercise.ConsoleControls;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             ShowDemo<PrompterDemo>();
             ShowDemo<TextMenuDemo>();
@@ -24,13 +21,12 @@ namespace Exercise.ConsoleControls
             Console.ReadLine();
         }
 
-        public static void ShowDemo<TDemo>() where TDemo : IDemo, new()
+        private static void ShowDemo<TDemo>() where TDemo : IDemo, new()
         {
-            TextBlock textBlock = new TextBlock
+            var textBlock = new TextBlock
             {
                 Text = typeof(TDemo).Name,
-                MarginTop = 1,
-                MarginBottom = 1,
+                Margin = 1,
                 ForegroundColor = ConsoleColor.Cyan
             };
 

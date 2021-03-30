@@ -28,8 +28,7 @@ namespace Exercise.ConsoleControls
         {
             ScrollMenu scrollMenu = new ScrollMenu()
             {
-                MarginTop = 1,
-                MarginBottom = 1,
+                Margin = 1,
                 EraseAfterClose = true,
                 HorizontalAlignment = HorizontalAlignment.Left
             };

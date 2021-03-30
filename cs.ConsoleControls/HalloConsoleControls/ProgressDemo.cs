@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DustInTheWind.ConsoleTools.Spinners;
 
 namespace Exercise.ConsoleControls
 {
@@ -6,12 +7,12 @@ namespace Exercise.ConsoleControls
     {
         public void Print()
         {
-            DustInTheWind.ConsoleTools.Spinners.ProgressBar progressBar = new DustInTheWind.ConsoleTools.Spinners.ProgressBar();
+            var progressBar = new ProgressBar();
             var task = Task.Run(async () =>
             {
                 progressBar.Display();
 
-                for (int i = 0; i < 100; i++)
+                for (var i = 0; i < 100; i++)
                 {
                     await Task.Delay(50);
                     progressBar.Value++;

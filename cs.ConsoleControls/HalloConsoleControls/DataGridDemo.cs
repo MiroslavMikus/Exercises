@@ -6,7 +6,7 @@ namespace Exercise.ConsoleControls
     {
         public void Print()
         {
-            DataGrid grid = new DataGrid("Here is example grid");
+            var grid = new DataGrid("Here is example grid");
             grid.Columns.Add("Name");
             grid.Columns.Add("Age");
 

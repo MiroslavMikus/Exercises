@@ -1,5 +1,5 @@
-﻿using DustInTheWind.ConsoleTools;
-using System;
+﻿using System;
+using DustInTheWind.ConsoleTools;
 
 namespace Exercise.ConsoleControls
 {
@@ -7,11 +7,10 @@ namespace Exercise.ConsoleControls
     {
         public void Print()
         {
-            TextBlock textBlock = new TextBlock
+            var textBlock = new TextBlock
             {
                 Text = "This is a demo for the TextBox control.",
-                MarginTop = 1,
-                MarginBottom = 1,
+                Margin = 1,
                 ForegroundColor = ConsoleColor.Cyan
             };
             textBlock.Display();

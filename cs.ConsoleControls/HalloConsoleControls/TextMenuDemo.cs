@@ -26,8 +26,7 @@ namespace Exercise.ConsoleControls
         {
             TextMenu scrollMenu = new TextMenu()
             {
-                MarginTop = 1,
-                MarginBottom = 1,
+                Margin = 1,
                 EraseAfterClose = true,
             };
 
