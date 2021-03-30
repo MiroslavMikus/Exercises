@@ -1,6 +1,5 @@
 ﻿using System;
 using DustInTheWind.ConsoleTools;
-using Exercise.ConsoleControls;
 
 namespace HalloConsoleControls
 {

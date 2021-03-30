@@ -1,7 +1,7 @@
 ﻿using System;
 using DustInTheWind.ConsoleTools.InputControls;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class YesNoDemo : IDemo
     {

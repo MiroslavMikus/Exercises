@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DustInTheWind.ConsoleTools.Spinners;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class SpinerDemo : IDemo
     {

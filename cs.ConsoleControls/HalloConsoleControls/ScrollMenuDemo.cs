@@ -1,9 +1,9 @@
-﻿using DustInTheWind.ConsoleTools;
+﻿using System;
+using DustInTheWind.ConsoleTools;
 using DustInTheWind.ConsoleTools.Menues;
 using DustInTheWind.ConsoleTools.Menues.MenuItems;
-using System;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class ScrollMenuDemo : IDemo
     {

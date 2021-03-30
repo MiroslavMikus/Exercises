@@ -1,6 +1,6 @@
 ﻿using DustInTheWind.ConsoleTools.Menues;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class PrompterDemo : IDemo
     {

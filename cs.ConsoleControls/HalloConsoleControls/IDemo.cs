@@ -1,4 +1,4 @@
-﻿namespace Exercise.ConsoleControls
+﻿namespace HalloConsoleControls
 {
     public interface IDemo
     {

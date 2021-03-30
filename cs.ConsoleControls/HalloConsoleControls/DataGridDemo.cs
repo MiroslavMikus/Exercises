@@ -1,6 +1,6 @@
 ﻿using DustInTheWind.ConsoleTools.TabularData;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class DataGridDemo : IDemo
     {

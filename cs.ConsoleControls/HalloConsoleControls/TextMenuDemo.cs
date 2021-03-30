@@ -1,7 +1,7 @@
-﻿using DustInTheWind.ConsoleTools.Menues;
-using System;
+﻿using System;
+using DustInTheWind.ConsoleTools.Menues;
 
-namespace Exercise.ConsoleControls
+namespace HalloConsoleControls
 {
     public class TextMenuDemo : IDemo
     {
