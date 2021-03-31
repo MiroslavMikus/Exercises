@@ -23,7 +23,7 @@ namespace HalloConfig
 
         static void Main(string[] args)
         {
-            var menu = new ScrollMenuPrinter();
+            var menu = new SpectreMenuPrinter();
             menu.Print();
         }
 
