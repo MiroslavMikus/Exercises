@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Threading;
+using HalloConfig.ConfigDebouncer;
 using HalloConfig.Menu;
-using Microsoft.Extensions.Configuration;
 using Spectre.Console;
 
 namespace HalloConfig
@@ -27,12 +25,30 @@ namespace HalloConfig
             menu.Print();
         }
 
+        public static void WaitForValueChangeCommand()
+        {
+            var autoReset = new AutoResetEvent(false);
+
+            string GetValue() => Configuration.GetSection("SomeGroup")["SomeValue"];
+
+            AnsiConsole.MarkupLine($"Waiting for section update [aqua]SomeGroup->SomeValue[/] (1 Min) with section delay 1 sec");
+
+            using var token = Configuration.OnChange(() =>
+            {
+                AnsiConsole.MarkupLine(
+                    $"Value of section [red]changed[/] [aqua]SomeGroup->SomeValue[/] is [purple]{GetValue()}[/]");
+            }, TimeSpan.FromSeconds(1));
+
+            autoReset.WaitOne(TimeSpan.FromMinutes(1));
+
+            AnsiConsole.MarkupLine($"Value of section [aqua]SomeGroup->SomeValue[/] is [purple]{GetValue()}[/]");
+        }
+
         public static void ReadGroupValueCommand()
         {
             var group = Configuration.GetSection("SomeGroup");
             var value = group["SomeValue"];
-
-            Console.WriteLine($"Value of section SomeGroup->SomeValue is {value}");
+            AnsiConsole.MarkupLine($"Value of section [aqua]SomeGroup->SomeValue[/] is [purple]{value}[/]");
         }
 
         public static void GetDebugViewCommand()
@@ -44,9 +60,7 @@ namespace HalloConfig
 
         public static void ReadEnvironmentVariableCommand()
         {
-            var appDataPath = Configuration["APPDATA"];
-
-            Console.WriteLine(appDataPath);
+            AnsiConsole.MarkupLine($"[green]APPDATA[/] value is [aqua]{Configuration["APPDATA"]}[/]");
         }
 
         public static void ShowConfigTreeCommand()
