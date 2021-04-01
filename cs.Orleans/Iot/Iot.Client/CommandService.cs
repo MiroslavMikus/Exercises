@@ -6,6 +6,7 @@ using Iot.GrainClasses.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Orleans;
+using Spectre.Console;
 
 namespace Iot.Client
 {
@@ -34,45 +35,45 @@ namespace Iot.Client
             return Task.CompletedTask;
         }
 
-        public async Task RunAsync()
+        private async Task RunAsync()
         {
             while (true)
             {
-                Console.WriteLine("write command" + Environment.NewLine);
-
-                var command = Console.ReadLine();
-
-                if (command == "exit")
-                {
-                    await _host.StopAsync();
-                }
+                Console.Clear();
+                AnsiConsole.MarkupLine("[green]Select command[/]");
+            
+                var command = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("What's your [green]favorite fruit[/]?")
+                        .PageSize(10)
+                        .AddChoices(new[] {"join", "set", "observe","exit"}));
 
                 try
                 {
                     switch (command)
                     {
-                        case var val when command.StartsWith("/join "):
-                            var joinInput = command.Replace("/join ", "").Split(',');
-
-                            var device = _client.GetGrain<IDeviceGrain>(int.Parse(joinInput[0]));
-
-                            await device.JoinSystem(joinInput[1]);
+                        case "join":
+                            var deviceId = AnsiConsole.Prompt(new TextPrompt<int>("Enter device ID:"));
+                            var systemId = AnsiConsole.Prompt(new TextPrompt<string>("Enter System ID:"));
+                            var device = _client.GetGrain<IDeviceGrain>(deviceId);
+                            await device.JoinSystem(systemId);
 
                             break;
-                        case var val when command.StartsWith("/set "):
-                            var setInput = command.Replace("/set ", "");
+                        case "set":
+                            var setValue = AnsiConsole.Prompt(new TextPrompt<string>("Enter [red]deviceId,value[/] to be set:"));
                             var decoder = _client.GetGrain<IDecodeGrain>(Guid.Empty);
-                            await decoder.Decode(setInput);
+                            await decoder.Decode(setValue);
                             break;
 
-                        case var val when command.StartsWith("/observe "):
-                            var observeInput = command.Replace("/observe ", "");
-                            var system = _client.GetGrain<ISystemGrain>(observeInput);
+                        case "observe":
+                            var systemIdToObserve = AnsiConsole.Prompt(new TextPrompt<string>("Enter system ID:"));
+                            var system = _client.GetGrain<ISystemGrain>(systemIdToObserve);
                             var observer = await _client.CreateObjectReference<ISystemObserver>(new SystemObserver());
                             await system.Subscribe(observer);
                             break;
-                        case var var when command.StartsWith("/exit"):
-                            return;
+                        case "exit":
+                            await _host.StopAsync();
+                            return; 
                         default:
                             Console.WriteLine("Invalid command");
                             break;

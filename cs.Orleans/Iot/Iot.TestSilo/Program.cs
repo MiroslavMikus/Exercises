@@ -23,12 +23,13 @@ namespace Iot.TestSilo
                     builder
                         .UseLocalhostClustering()
                         .ConfigureApplicationParts(_ => _.AddApplicationPart(typeof(DeviceGrain).Assembly).WithReferences())
-                        .AddAdoNetGrainStorage("sql", options =>
-                        {
-                            options.Invariant = "System.Data.SqlClient";
-                            options.ConnectionString = configuration.GetConnectionString("localDb");
-                            options.UseJsonFormat = true;
-                        })
+                        .AddMemoryGrainStorage("sql")
+                        // .AddAdoNetGrainStorage("sql", options =>
+                        // {
+                        //     options.Invariant = "System.Data.SqlClient";
+                        //     options.ConnectionString = configuration.GetConnectionString("localDb");
+                        //     options.UseJsonFormat = true;
+                        // })
                         .UseDashboard();
                 })
                 .ConfigureLogging(builder =>

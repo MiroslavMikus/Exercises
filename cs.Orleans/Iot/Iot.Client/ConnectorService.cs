@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Orleans;
+using Spectre.Console;
 
 namespace Iot.Client
 {
     public class ConnectorService : IHostedService
     {
+        private static void WriteLogMessage(string message)
+        {
+            AnsiConsole.MarkupLine($"[grey]LOG:[/] {message}[grey]...[/]");
+        }
+        
         private readonly ILogger<ConnectorService> _logger;
         public IClusterClient Client { get; }
 
@@ -23,34 +28,35 @@ namespace Iot.Client
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Connecting...");
-
-            var retries = 100;
-            await Client.Connect(async error =>
+            await AnsiConsole.Status().StartAsync("Connecting...", async ctx =>
             {
-                if (--retries < 0)
+                var retries = 100;
+                await Client.Connect(async error =>
                 {
-                    _logger.LogError("Could not connect to the cluster: {@Message}", error.Message);
-                    return false;
-                }
-                else
-                {
-                    _logger.LogWarning(error, "Error Connecting: {@Message}", error.Message);
-                }
+                    if (--retries < 0)
+                    {
+                        WriteLogMessage("[red]Error[/] Connecting: could not connect to cluster");
+                        return false;
+                    }
+                    else
+                    {
+                        WriteLogMessage($"[yellow]Warning[/] Connecting: could not connect to cluster, retry [purple]{retries}[/]");
+                    }
 
-                try
-                {
-                    await Task.Delay(1000, cancellationToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    return false;
-                }
+                    try
+                    {
+                        await Task.Delay(1000, cancellationToken);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return false;
+                    }
 
-                return true;
+                    return true;
+                });
             });
 
-            _logger.LogInformation("Connected.");
+            WriteLogMessage("[bold green]Connected.[/]");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
