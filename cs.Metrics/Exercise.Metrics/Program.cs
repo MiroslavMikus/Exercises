@@ -9,48 +9,42 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exercise.Metrics.Menu;
 
 namespace Exercise.Metrics
 {
-    class Program
+    static class Program
     {
+        private static IMetricsRoot Metrics;
+
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-            var metrics = new MetricsBuilder()
-                .OutputMetrics.AsPlainText()
+            Metrics = new MetricsBuilder()
                 .OutputMetrics.AsJson()
-                .Report.ToConsole()
+                .OutputMetrics.AsPlainText()
+                .Report.ToConsole(a => a.FlushInterval = TimeSpan.Zero)
                 .Build();
 
-            TryConnectionGauge(metrics);
-            
-            // TryCpuGauge(metrics);
-            //
-            // await TryTimer(metrics);
-            //
-            // await Task.WhenAll(metrics.ReportRunner.RunAllAsync());
-            //
-            // await ReportEnviromentInfo(metrics);
-            await ReportFormatedSnapshot(metrics, metrics.Snapshot.Get());
-
-            Console.WriteLine("Done");
-            Console.ReadLine();
+            // TryConnectionGaugeCommand();
+            // TryCpuGaugeCommand();
+            var menu = new SpectreMenuPrinter();
+            await menu.Print();
         }
 
-        private static void TryConnectionGauge(IMetricsRoot metrics)
+        public static async Task TryConnectionGaugeCommand()
         {
             var counters = Enumerable.Range(1, 10)
                 .Select(a => MetricsRegistry.Connection(a));
 
             foreach (var c in counters)
             {
-                metrics.Measure.Gauge.SetValue(c,1);
+                Metrics.Measure.Gauge.SetValue(c, 1);
             }
-            
+
+            // await ReportFormatedSnapshotAsyncCommand();
         }
-        private static void TryCpuGauge(IMetricsRoot metrics)
+
+        public static void TryCpuGaugeCommand()
         {
             var processPhysicalMemoryGauge = new GaugeOptions
             {
@@ -60,7 +54,7 @@ namespace Exercise.Metrics
 
             var process = Process.GetCurrentProcess();
 
-            metrics.Measure.Gauge.SetValue(processPhysicalMemoryGauge, process.WorkingSet64 / 1024 / 1024);
+            Metrics.Measure.Gauge.SetValue(processPhysicalMemoryGauge, process.WorkingSet64 / 1024 / 1024);
         }
 
         private static async Task TryTimer(IMetricsRoot metrics)
@@ -80,10 +74,7 @@ namespace Exercise.Metrics
         {
             var scheduler = new AppMetricsTaskScheduler(
                 TimeSpan.FromSeconds(2),
-                async () =>
-                {
-                    await Task.WhenAll(metrics.ReportRunner.RunAllAsync());
-                });
+                async () => { await Task.WhenAll(metrics.ReportRunner.RunAllAsync()); });
 
             scheduler.Start();
 
@@ -102,41 +93,26 @@ namespace Exercise.Metrics
             }
         }
 
-        private static async Task ReportSnapshot(IMetricsRoot metrics, MetricsDataValueSource snapshot)
+        public static async Task ReportSnapshotCommand()
         {
-            using (var stream = new MemoryStream())
-            {
-                await metrics.DefaultOutputMetricsFormatter.WriteAsync(stream, snapshot);
+            await using var stream = new MemoryStream();
 
-                var result = Encoding.UTF8.GetString(stream.ToArray());
+            await Metrics.DefaultOutputMetricsFormatter.WriteAsync(stream, Metrics.Snapshot.Get());
 
-                System.Console.WriteLine(result);
-            }
+            var result = Encoding.UTF8.GetString(stream.ToArray());
+
+            await Console.Out.WriteLineAsync(result);
         }
 
-        private static async Task ReportFormatedSnapshot(IMetricsRoot metrics, MetricsDataValueSource snapshot)
+        public static async Task ReportEnviromentInfoCommand()
         {
-            foreach (var formatter in metrics.OutputMetricsFormatters)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    await formatter.WriteAsync(stream, snapshot);
+            await using var stream = new MemoryStream();
 
-                    var result = Encoding.UTF8.GetString(stream.ToArray());
+            await Metrics.DefaultOutputEnvFormatter.WriteAsync(stream, Metrics.EnvironmentInfo);
 
-                    System.Console.WriteLine(result);
-                }
-            }
-        }
+            var result = Encoding.UTF8.GetString(stream.ToArray());
 
-        private static async Task ReportEnviromentInfo(IMetricsRoot metrics)
-        {
-            using (var stream = new MemoryStream())
-            {
-                await metrics.DefaultOutputEnvFormatter.WriteAsync(stream, metrics.EnvironmentInfo);
-                var result = Encoding.UTF8.GetString(stream.ToArray());
-                System.Console.WriteLine(result);
-            }
+            await Console.Out.WriteLineAsync(result);
         }
     }
 }
