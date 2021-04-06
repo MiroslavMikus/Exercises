@@ -12,6 +12,13 @@ namespace Exercise.Metrics
 {
     public static class MetricsRegistry
     {
+        public static GaugeOptions Connection(int id) => new GaugeOptions
+        {
+            Name = $"Connection-{id}",
+            Context = "ECS",
+            Tags = new MetricTags(new[]{"AGV"}, new[]{"aha"})
+        };
+        
         public static GaugeOptions Errors => new GaugeOptions
         {
             Name = "Errors"

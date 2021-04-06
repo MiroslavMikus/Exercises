@@ -6,6 +6,7 @@ using App.Metrics.Scheduling;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,19 +24,32 @@ namespace Exercise.Metrics
                 .Report.ToConsole()
                 .Build();
 
-            TryCpuGauge(metrics);
-
-            await TryTimer(metrics);
-
-            await Task.WhenAll(metrics.ReportRunner.RunAllAsync());
-
-            await ReportEnviromentInfo(metrics);
+            TryConnectionGauge(metrics);
+            
+            // TryCpuGauge(metrics);
+            //
+            // await TryTimer(metrics);
+            //
+            // await Task.WhenAll(metrics.ReportRunner.RunAllAsync());
+            //
+            // await ReportEnviromentInfo(metrics);
             await ReportFormatedSnapshot(metrics, metrics.Snapshot.Get());
 
             Console.WriteLine("Done");
             Console.ReadLine();
         }
 
+        private static void TryConnectionGauge(IMetricsRoot metrics)
+        {
+            var counters = Enumerable.Range(1, 10)
+                .Select(a => MetricsRegistry.Connection(a));
+
+            foreach (var c in counters)
+            {
+                metrics.Measure.Gauge.SetValue(c,1);
+            }
+            
+        }
         private static void TryCpuGauge(IMetricsRoot metrics)
         {
             var processPhysicalMemoryGauge = new GaugeOptions
