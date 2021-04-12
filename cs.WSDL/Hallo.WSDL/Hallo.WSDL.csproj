@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Service References" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TestService" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Service References\TestService\tempconvert.disco" />
+    <None Include="Service References\TestService\tempconvert.wsdl" />
+    <None Include="Service References\TestService\TestService.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>TestService.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TestService\TestService.webref" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Service References\TestService\TestService.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestService.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ServiceModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.38.0" />
+  </ItemGroup>
+
+</Project>
