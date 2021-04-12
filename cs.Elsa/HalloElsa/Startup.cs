@@ -2,10 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elsa.Activities.Http.Extensions;
+using Elsa.Activities.Timers.Extensions;
+using Elsa.Persistence.EntityFrameworkCore.DbContexts;
+using Elsa.Persistence.EntityFrameworkCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,12 +33,20 @@ namespace HalloElsa
         {
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "HalloElsa", Version = "v1"}); });
-            services.AddElsa();
+            
+            services
+                .AddElsa(elsa => elsa
+                    .AddEntityFrameworkStores<SqliteContext>(options => options
+                        .UseSqlite("Data Source=elsa.db;Cache=Shared")))
+                .AddHttpActivities()
+                .AddTimerActivities();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseHttpActivities();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
