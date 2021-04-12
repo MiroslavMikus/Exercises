@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="39f2b920-67be-4c50-b207-e97aba6d1ba5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="c3c922b2-fb11-4aed-9ac6-179b547da0e5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="https://www.w3schools.com/xml/tempconvert.asmx" Protocol="https" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="tempconvert.wsdl" MetadataType="Wsdl" ID="5a756e56-807a-43ea-948b-7af7cd667f1c" SourceId="1" SourceUrl="https://www.w3schools.com/xml/tempconvert.asmx?wsdl" />
-    <MetadataFile FileName="tempconvert.disco" MetadataType="Disco" ID="f811036e-5546-46d4-a0de-3336795671a9" SourceId="1" SourceUrl="https://www.w3schools.com/xml/tempconvert.asmx?disco" />
+    <MetadataFile FileName="tempconvert.wsdl" MetadataType="Wsdl" ID="c7aaf51c-5d53-4793-ac04-53967fa530e5" SourceId="1" SourceUrl="https://www.w3schools.com/xml/tempconvert.asmx?wsdl" />
+    <MetadataFile FileName="tempconvert.disco" MetadataType="Disco" ID="1407576a-112b-436f-ae56-24068a7d398c" SourceId="1" SourceUrl="https://www.w3schools.com/xml/tempconvert.asmx?disco" />
   </Metadata>
   <Extensions />
 </ReferenceGroup>
