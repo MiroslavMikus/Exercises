@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elsa.Activities.Console.Extensions;
 using Elsa.Activities.Http.Extensions;
 using Elsa.Activities.Timers.Extensions;
+using Elsa.Dashboard.Extensions;
+using Elsa.Persistence.EntityFrameworkCore.CustomSchema;
 using Elsa.Persistence.EntityFrameworkCore.DbContexts;
 using Elsa.Persistence.EntityFrameworkCore.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -32,14 +35,21 @@ namespace HalloElsa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "HalloElsa", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "HalloElsa", Version = "v1"
+            }); });
             
             services
                 .AddElsa(elsa => elsa
-                    .AddEntityFrameworkStores<SqliteContext>(options => options
-                        .UseSqlite("Data Source=elsa.db;Cache=Shared")))
+                     .AddEntityFrameworkStores<SqliteContext>(options =>
+                     {
+                         options.UseSqlite("Data Source=C:/temp/elsa.db;");
+                     }))
                 .AddHttpActivities()
-                .AddTimerActivities();
+                .AddConsoleActivities()
+                .AddTimerActivities()
+                .AddElsaDashboard();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,11 +64,11 @@ namespace HalloElsa
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HalloElsa v1"));
             }
 
-            app.UseHttpsRedirection();
-
+            // app.UseHttpsRedirection();
+            
+            app.UseStaticFiles();
+            
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
