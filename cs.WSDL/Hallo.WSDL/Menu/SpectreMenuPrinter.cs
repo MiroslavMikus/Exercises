@@ -8,30 +8,80 @@ namespace Hallo.WSDL.Menu
 {
     public class SpectreMenuPrinter
     {
-        public static void Exit() => Environment.Exit(0);
+        private readonly string _header;
+        public bool SkipNextReadline { get; set; } = false;
+        private bool _repeat = true;
+        public Action OnClose { get; set; } = () => { };
 
-        public async Task Print()
+        public SpectreMenuPrinter(string header = null)
         {
-            while (true)
-            {
-                var command = AnsiConsole.Prompt(new SelectionPrompt<MethodInfo>().Title("[green]Select command[/]")
-                    .AddChoices(ReflectionTools.GetCommands(typeof(Program)).OrderBy(a => a.Name))
-                    .AddChoice(typeof(SpectreMenuPrinter).GetMethods().Single(a => a.Name == "Exit"))
-                    .UseConverter(a => a.Name.Replace("Command", "")));
+            _header = header;
+        }
 
+        public async Task Print(string title, string suffix = "Command")
+        {
+            while (_repeat)
+            {
                 Console.Clear();
 
-                var result = command.Invoke(null, null);
-
-                if (result is Task resultTask)
+                if (!string.IsNullOrEmpty(_header))
                 {
-                    await resultTask;
+                    AnsiConsole.Render(
+                        new FigletText(_header)
+                            .LeftAligned()
+                            .Color(Color.Red));
                 }
 
-                AnsiConsole.Markup("[underline red]Return to menu[/]");
-                Console.ReadLine();
-                Console.Clear();
+                var command = AnsiConsole.Prompt(new SelectionPrompt<MethodInfo>().Title($"[green]{title}[/]")
+                    .AddChoices(GetCommands(typeof(Program), suffix).OrderBy(a => a.Name))
+                    .AddChoice(typeof(SpectreMenuPrinter).GetMethods()
+                        .Single(a => a.Name == "Close"))
+                    .UseConverter(a => a.Name.Replace(suffix, "")));
+
+                AnsiConsole.MarkupLine($"[blue]{title}>{command.Name}[/]" + Environment.NewLine);
+                if (!command.IsStatic) // closing
+                {
+                    command.Invoke(this, null);
+                    OnClose();
+                    continue;
+                }
+
+                try
+                {
+                    var result = command.Invoke(null, null);
+
+                    if (result is Task resultTask)
+                    {
+                        await resultTask;
+                    }
+                }
+                catch (Exception e)
+                {
+                    AnsiConsole.WriteException(e);
+                }
+
+                if (SkipNextReadline)
+                {
+                    SkipNextReadline = false;
+                }
+                else
+                {
+                    AnsiConsole.Markup(Environment.NewLine + $"Return to [underline red bold]{title}[/] menu");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
             }
         }
+
+        private static MethodInfo[] GetCommands(Type assemblyType, string suffix)
+        {
+            return assemblyType.Assembly.GetTypes()
+                .Where(a => a.IsAbstract && a.IsSealed)
+                .SelectMany(a => a.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                .Where(a => a.Name.EndsWith(suffix))
+                .ToArray();
+        }
+
+        public void Close() => _repeat = false;
     }
 }

@@ -13,6 +13,7 @@ namespace Hallo.WSDL
 
         static async Task Main(string[] args)
         {
+            Console.WriteLine("Test");
             var binding = new BasicHttpBinding
             {
                 MaxReceivedMessageSize = 1_000_000,
@@ -24,8 +25,8 @@ namespace Hallo.WSDL
 
             _client = new TestService.TempConvertSoapClient(binding, endpoint);
             
-            var menu = new SpectreMenuPrinter();
-            await menu.Print();
+            var menu = new SpectreMenuPrinter("WSDL Test");
+            await menu.Print("Select command");
         }
 
         public static void FahrenheitToCelsiusCommand()
