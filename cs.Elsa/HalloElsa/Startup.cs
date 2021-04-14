@@ -6,6 +6,7 @@ using Elsa.Activities.Console.Extensions;
 using Elsa.Activities.Http.Extensions;
 using Elsa.Activities.Timers.Extensions;
 using Elsa.Dashboard.Extensions;
+using Elsa.Extensions;
 using Elsa.Persistence.EntityFrameworkCore.CustomSchema;
 using Elsa.Persistence.EntityFrameworkCore.DbContexts;
 using Elsa.Persistence.EntityFrameworkCore.Extensions;
@@ -46,10 +47,13 @@ namespace HalloElsa
                      {
                          options.UseSqlite("Data Source=C:/temp/elsa.db;");
                      }))
+                .AddActivity<TestActivity>()
                 .AddHttpActivities()
                 .AddConsoleActivities()
                 .AddTimerActivities()
                 .AddElsaDashboard();
+
+            services.AddNotificationHandlers(typeof(SayHelloJavaScriptHandler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
