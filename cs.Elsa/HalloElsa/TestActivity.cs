@@ -9,7 +9,7 @@ using Elsa.Services.Models;
 
 namespace HalloElsa
 {
-    [ActivityDefinition(Category = "Custom", Description = "My first activity", Outcomes = new[] {"ok", "not ok"}, DisplayName = "My test Activity")]
+    [ActivityDefinition(Category = "Custom", Description = "My first activity", Outcomes = new[] {"ok", "not_ok"}, DisplayName = "My test Activity")]
     public class TestActivity : Activity
     {
         [ActivityProperty(Hint = "The message to write.")]
