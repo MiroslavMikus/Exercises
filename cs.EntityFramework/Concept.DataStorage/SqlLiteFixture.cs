@@ -28,7 +28,6 @@ namespace Concept.DataStorage
             await Context.Database.MigrateAsync();
         }
 
-
         public Task DisposeAsync()
         {
             File.Delete(_db);

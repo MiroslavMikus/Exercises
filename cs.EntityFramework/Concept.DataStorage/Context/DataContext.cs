@@ -16,6 +16,8 @@ namespace Concept.DataStorage.Context
         {
             modelBuilder.HasDefaultSchema("data");
             
+            var addMethod = typeof(ModelBuilder).GetMethod("ApplyConfiguration");
+
             var entityMethod = typeof(ModelBuilder).GetMethod("Entity", new Type[0]);
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -26,12 +28,29 @@ namespace Concept.DataStorage.Context
                         t.GetCustomAttributes(typeof(PersistentAttribute), inherit: true)
                             .Any()).ToList();
 
-                modelBuilder.Entity<Person>();
+                if (!entityTypes.Any()) continue;
+
+                var configTypes = assembly
+                    .GetTypes()
+                    .Where(t => t.BaseType != null
+                                && t.BaseType.IsGenericType
+                                && t.BaseType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>));
+
+                var configTypesLookup =
+                    configTypes.ToDictionary(a => a.BaseType.GetGenericArguments().Single(), b => b);
 
                 foreach (var type in entityTypes)
                 {
-                    entityMethod.MakeGenericMethod(type)
-                        .Invoke(modelBuilder, new object[] { });
+                    if (configTypesLookup.ContainsKey(type))
+                    {
+                        addMethod.MakeGenericMethod(type)
+                            .Invoke(modelBuilder, new object[] {configTypesLookup[type]});
+                    }
+                    else
+                    {
+                        entityMethod.MakeGenericMethod(type)
+                            .Invoke(modelBuilder, new object[] { });
+                    }
                 }
             }
         }
