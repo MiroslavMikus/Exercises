@@ -14,6 +14,8 @@ namespace Concept.DataStorage.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("data");
+            
             var entityMethod = typeof(ModelBuilder).GetMethod("Entity", new Type[0]);
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())

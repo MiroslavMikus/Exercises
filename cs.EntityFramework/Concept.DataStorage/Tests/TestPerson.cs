@@ -5,7 +5,8 @@ using Xunit;
 
 namespace Concept.DataStorage.Tests
 {
-    public class TestPerson : IClassFixture<SqlLiteFixture>
+    [Collection("sqllite")]
+    public class TestPerson
     {
         private readonly SqlLiteFixture _data;
 

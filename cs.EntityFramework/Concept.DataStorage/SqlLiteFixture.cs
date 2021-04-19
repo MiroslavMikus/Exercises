@@ -8,6 +8,11 @@ using Xunit;
 
 namespace Concept.DataStorage
 {
+    [CollectionDefinition("sqllite")]
+    public class SqlLiteCollection : ICollectionFixture<SqlLiteFixture>
+    {
+    }
+
     public class SqlLiteFixture : IAsyncLifetime
     {
         public DataContext Context { get; set; }
@@ -21,14 +26,12 @@ namespace Concept.DataStorage
             Context = new DataContext(opt);
 
             await Context.Database.MigrateAsync();
-
-            await Context.SaveChangesAsync();
         }
 
 
         public Task DisposeAsync()
         {
-            // File.Delete(_db);
+            File.Delete(_db);
             return Task.CompletedTask;
         }
     }
