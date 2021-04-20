@@ -30,7 +30,7 @@ namespace Concept.DataStorage
 
         public Task DisposeAsync()
         {
-            File.Delete(_db);
+            // File.Delete(_db);
             return Task.CompletedTask;
         }
     }
