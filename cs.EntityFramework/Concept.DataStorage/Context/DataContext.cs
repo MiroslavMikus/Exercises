@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Concept.DataStorage.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Concept.DataStorage.Context
@@ -12,10 +11,17 @@ namespace Concept.DataStorage.Context
             Database.EnsureCreated();
         }
 
+        private Type ImplementsGenericInterface(Type candidate, Type interfaceType)
+        {
+            return candidate.GetInterfaces()
+                .FirstOrDefault(a => a.IsGenericType && a.GetGenericTypeDefinition() == interfaceType)
+                ?.GetGenericArguments()[0];
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("data");
-            
+
             var addMethod = typeof(ModelBuilder).GetMethod("ApplyConfiguration");
 
             var entityMethod = typeof(ModelBuilder).GetMethod("Entity", new Type[0]);
@@ -32,19 +38,17 @@ namespace Concept.DataStorage.Context
 
                 var configTypes = assembly
                     .GetTypes()
-                    .Where(t => t.BaseType != null
-                                && t.BaseType.IsGenericType
-                                && t.BaseType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>));
-
-                var configTypesLookup =
-                    configTypes.ToDictionary(a => a.BaseType.GetGenericArguments().Single(), b => b);
+                    .Select(t => new
+                        {Key = ImplementsGenericInterface(t, typeof(IEntityTypeConfiguration<>)), Config = t})
+                    .Where(a => a.Key != null).ToArray();
 
                 foreach (var type in entityTypes)
                 {
-                    if (configTypesLookup.ContainsKey(type))
+                    var config = configTypes.FirstOrDefault(a => a.Key == type);
+                    if (config is not null)
                     {
                         addMethod.MakeGenericMethod(type)
-                            .Invoke(modelBuilder, new object[] {configTypesLookup[type]});
+                            .Invoke(modelBuilder, new object[] {Activator.CreateInstance(config.Config) });
                     }
                     else
                     {

@@ -12,7 +12,7 @@ namespace Concept.DataStorage.Model
     }
 
 
-    public class BaseEntityConfig : IEntityTypeConfiguration<Car>
+    public class CarConfig : IEntityTypeConfiguration<Car>
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
