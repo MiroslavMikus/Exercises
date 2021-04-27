@@ -9,30 +9,6 @@ using Xunit;
 namespace Concept.DataStorage.Tests
 {
     [Collection("sqllite")]
-    public class ShapteTest
-    {
-        private readonly SqlLiteFixture _data;
-
-        public ShapteTest(SqlLiteFixture data)
-        {
-            _data = data;
-        }
-
-        [Fact]
-        public async Task StoreMultipleShapes()
-        {
-            _data.Context.Set<User>().Add(new User()
-            {
-                Shape = new Shape()
-                {
-                    Length = "long"
-                }
-            });
-            await _data.Context.SaveChangesAsync();
-        }
-    }
-
-    [Collection("sqllite")]
     public class CustomerTest
     {
         private readonly SqlLiteFixture _data;
