@@ -1,27 +1,29 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using Concept.DataStorage.Context;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
 using Xunit;
 
 namespace Concept.DataStorage
 {
-    [CollectionDefinition("sqllite")]
-    public class SqlLiteCollection : ICollectionFixture<SqlLiteFixture>
+    [CollectionDefinition("mssql")]
+    public class MsSqlCollection : ICollectionFixture<MsSqlFixture>
     {
     }
-
-    public class SqlLiteFixture : IAsyncLifetime
+    
+    public class MsSqlFixture : IAsyncLifetime
     {
         public DataContext Context { get; set; }
 
-        private const string Db = "test.sqlite";
+        private const string Db = "server=localhost;database=testdb;uid=sa;pwd=Example123";
 
         public async Task InitializeAsync()
         {
-            var opt = new DbContextOptionsBuilder().UseSqlite($"Data Source={Db}").Options;
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 21));
+
+            var opt = new DbContextOptionsBuilder()
+                .UseSqlServer(Db)
+                .Options;
 
             Context = new DataContext(opt);
 
@@ -30,7 +32,6 @@ namespace Concept.DataStorage
 
         public Task DisposeAsync()
         {
-            File.Delete(Db);
             return Task.CompletedTask;
         }
     }

@@ -6,14 +6,14 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace Concept.DataStorage.Tests.MySql
+namespace Concept.DataStorage.Tests.MsSql
 {
-    [Collection("mysql")]
+    [Collection("mssql")]
     public class CustomerTest
     {
-        private readonly MySqlFixture _data;
+        private readonly MsSqlFixture _data;
 
-        public CustomerTest(MySqlFixture data)
+        public CustomerTest(MsSqlFixture data)
         {
             _data = data;
         }
