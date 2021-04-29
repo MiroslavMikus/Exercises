@@ -1,0 +1,10 @@
+version: '3'
+services:
+  msSqlDb:
+    container_name: "sql_database"
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Example123
+    ports:
+        - "1433:1433"
+    image: mcr.microsoft.com/mssql/server:2017-latest
