@@ -11,7 +11,8 @@ namespace Concept.DataStorage.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        
+        public string ItemColor { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
     }

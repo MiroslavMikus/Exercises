@@ -20,7 +20,7 @@ namespace Concept.DataStorage.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("data");
+            // modelBuilder.HasDefaultSchema("data");
 
             var addMethod = typeof(ModelBuilder).GetMethod("ApplyConfiguration");
 
