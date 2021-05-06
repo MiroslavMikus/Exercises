@@ -38,7 +38,9 @@ namespace Concept.DataStorage.Tests.MsSql
             });
             await _data.Context.SaveChangesAsync();
 
-            var customer = await _data.Context.Set<Customer>().SingleAsync(a => a.Name == "Flokko");
+            var customer = await _data.Context.Set<Customer>()
+                .Include(a => a.Orders)
+                .FirstAsync(a => a.Name == "Flokko");
 
             customer.Orders.Any(a => a.ItemName == "Some").Should().BeTrue();
             customer.Orders.Any(a => a.ItemName == "Thing").Should().BeTrue();
