@@ -62,9 +62,9 @@ type ICustomer =
 type CustomerWithInterface(forename : string, surename : string) =
     
     interface ICustomer with
-        member __.Forename = forename
-        member __.Surename = surename
-        member __.Fullname = sprintf "%s %s" forename surename
+        member _.Forename = forename
+        member _.Surename = surename
+        member _.Fullname = sprintf "%s %s" forename surename
 
 let customerInterface = CustomerWithInterface("some", "customer")
 
