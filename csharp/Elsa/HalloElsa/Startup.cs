@@ -2,14 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Elsa.Activities.Console.Extensions;
-using Elsa.Activities.Http.Extensions;
-using Elsa.Activities.Timers.Extensions;
-using Elsa.Dashboard.Extensions;
-using Elsa.Extensions;
-using Elsa.Persistence.EntityFrameworkCore.CustomSchema;
-using Elsa.Persistence.EntityFrameworkCore.DbContexts;
-using Elsa.Persistence.EntityFrameworkCore.Extensions;
+using Elsa;
+using ElsaDashboard.Backend.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,22 +30,25 @@ namespace HalloElsa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "HalloElsa", Version = "v1"
-            }); });
-            
-            services
-                .AddElsa(elsa => elsa
-                     .AddEntityFrameworkStores<SqliteContext>(options =>
-                     {
-                         options.UseSqlite("Data Source=C:/temp/elsa.db;");
-                     }))
-                .AddActivity<TestActivity>()
-                .AddHttpActivities()
+
+            services.AddElsaCore(elsa => elsa
                 .AddConsoleActivities()
-                .AddTimerActivities()
-                .AddElsaDashboard();
+                // .AddJavaScriptActivities()
+                .AddHttpActivities());
+            
+            services.AddRazorPages(); 
+            services.AddElsaDashboardUI(options => options.ElsaServerUrl = new Uri("https://localhost:11000"));
+            services.AddElsaDashboardBackend(options => options.ServerUrl = new Uri("https://localhost:11000"));
+            // .AddElsa(elsa => elsa
+                //      .AddEntityFrameworkStores<SqliteContext>(options =>
+                //      {
+                //          options.UseSqlite("Data Source=C:/temp/elsa.db;");
+                //      }))
+                // .AddActivity<TestActivity>()
+                // .AddHttpActivities()
+                // .AddConsoleActivities()
+                // .AddTimerActivities()
+                // .AddElsaDashboard();
 
             services.AddNotificationHandlers(typeof(SayHelloJavaScriptHandler));
         }
@@ -74,7 +71,13 @@ namespace HalloElsa
             
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseElsaGrpcServices();
+            
+            app.UseEndpoints(endpoints =>
+            {
+                // Elsa Server uses ASP.NET Core Controllers.
+                endpoints.MapControllers();
+            });
         }
     }
 }
