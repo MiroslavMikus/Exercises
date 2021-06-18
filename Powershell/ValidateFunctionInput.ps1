@@ -34,3 +34,14 @@ param(
     [Parameter()]
     $SkipIfRunOnceSet
 )
+
+function Test-FileInfo {
+    param (
+        [Validatescript({$_.Exists})] # Accepts only existing path
+        [System.IO.FileInfo]$path
+        )
+    return $path   
+}
+
+Test-FileInfo "./WhatIf.ps1"
+Test-FileInfo "./WhatIf.ps2"
