@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Hello.Assembly_Context.Core\Hello.Assembly_Context.Core.csproj" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="robocopy $(OutDir) $(SolutionDir)\Hello.Assembly_Context.Console\bin\Debug\net5.0\Plugin" />
+    </Target>
+
+</Project>

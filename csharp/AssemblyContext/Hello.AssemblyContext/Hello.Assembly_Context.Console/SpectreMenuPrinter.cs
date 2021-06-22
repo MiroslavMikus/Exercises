@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Spectre.Console;
 
-namespace HelloSpectre.Menu
+namespace Hello.Assembly_Context.Console
 {
     public class SpectreMenuPrinter
     {
@@ -22,7 +22,7 @@ namespace HelloSpectre.Menu
         {
             while (_repeat)
             {
-                Console.Clear();
+                System.Console.Clear();
 
                 if (!string.IsNullOrEmpty(_header))
                 {
@@ -67,8 +67,8 @@ namespace HelloSpectre.Menu
                 else
                 {
                     AnsiConsole.Markup(Environment.NewLine + $"Return to [underline red bold]{title}[/] menu");
-                    Console.ReadLine();
-                    Console.Clear();
+                    System.Console.ReadLine();
+                    System.Console.Clear();
                 }
             }
         }
