@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hello.Assembly_Context.Cust
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hello.Assembly_Context.Console", "Hello.Assembly_Context.Console\Hello.Assembly_Context.Console.csproj", "{FD53DA22-EDB7-4BFC-BA25-411344BD3FF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hello.Assembly_Context.CustomerWithDependency", "Hello.Assembly_Context.CustomerWithDependency\Hello.Assembly_Context.CustomerWithDependency.csproj", "{BB23CA54-1574-4BEC-9269-5670ED3C4D90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FD53DA22-EDB7-4BFC-BA25-411344BD3FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD53DA22-EDB7-4BFC-BA25-411344BD3FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD53DA22-EDB7-4BFC-BA25-411344BD3FF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB23CA54-1574-4BEC-9269-5670ED3C4D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB23CA54-1574-4BEC-9269-5670ED3C4D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB23CA54-1574-4BEC-9269-5670ED3C4D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB23CA54-1574-4BEC-9269-5670ED3C4D90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
