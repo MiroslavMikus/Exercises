@@ -1,16 +1,27 @@
-function set-data {
+function Set-Data {
     [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
-    param([string]$Name)
+    param (
+        [Parameter(ValueFromPipeline)]
+        [string]$Name
+    )
     
-    if ($PSCmdlet.ShouldProcess("Printing $Name")) {
-        Write-Host $Name
-
-        if ($PSCmdlet.ShouldContinue("do we continue?","Caption")){
-            Write-Host Yes
-        } else {
-            Write-Host No
+    begin {
+        Write-Host "begin block"
+    }
+    
+    process {
+        if ($PSCmdlet.ShouldProcess($Name, "Write")){
+            Write-Host "Process $Name"
         }
+    }
+    
+    end {
+        Write-Host "End block"
     }
 }
 
-set-data "Miro"
+"aha","here" | set-data
+"aha","here" | set-data -WhatIf
+
+$ConfirmPreference = 'High'
+$ConfirmPreference = 'High'

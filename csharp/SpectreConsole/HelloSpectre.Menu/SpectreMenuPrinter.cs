@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HelloSpectre.Menu
 {
- public class SpectreMenuPrinter
+    public class SpectreMenuPrinter
     {
         private readonly string _header;
         public bool SkipNextReadline { get; set; } = false;
