@@ -1,0 +1,30 @@
+#!markdown
+
+## Create custom object
+
+#!pwsh
+
+$testObj = [PSCustomObject]@{
+    Int = 12;
+    Func = { gps }
+}
+
+$testObj | gm
+
+$testObj.Func.Invoke() | select -first 2
+
+#!markdown
+
+## Pass parameters by dictionary
+
+#!pwsh
+
+$params = @{
+    Path = "C:\"
+}
+
+Get-ChildItem @params -Depth 0
+
+#!markdown
+
+## TODO DSC [Configuration](https://www.youtube.com/watch?v=D-jmIk4xaWw)
